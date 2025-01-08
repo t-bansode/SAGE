@@ -1,0 +1,93 @@
+{% extends "storytelling/after_navber.html" %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Italiana', serif;
+        color: white;
+        background: url("{% static 'imgs/home.png' %}") no-repeat center center fixed;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 20px 0;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    }
+
+    ul {
+        margin: 20px auto;
+        padding: 0;
+        max-width: 800px;
+        list-style-type: none;
+    }
+
+    li {
+        background: black;
+        margin: 10px 0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    li strong {
+        font-size: 1.5rem;
+        color: purple;
+    }
+
+    li p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: white;
+        margin-top: 10px;
+    }
+
+    .empty-message {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-top: 50px;
+    }
+
+    a.back-btn {
+        display: inline-block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        color: black;
+        background: white;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    a.back-btn:hover {
+        background: purple;
+        color: white;
+        box-shadow: 0px 4px 10px purple;
+    }
+    .button-container {
+    text-align: center;
+    padding-bottom: 40px;
+}
+</style>
+
+<h1 style="margin-top: 100px;margin-bottom: -50px;margin-left: auto; margin-right: auto;">Previously Generated Stories</h1>
+<ul>
+    {% for story in stories %}<br><br>
+        <li>
+            <strong>PROMPT: {{ story.topic }}</strong> <br>({{ story.created_at|date:"F j, Y, g:i a" }}):<br><BR>
+            <p>{{ story.story }}</p>
+        </li>
+    {% empty %}
+        <p class="empty-message">No stories generated yet.</p>
+    {% endfor %}
+</ul>
+<div class="button-container">
+    <a href="{% url 'home' %}" class="back-btn">Back to Story Generator</a>
+</div>
+
+{% endblock %}

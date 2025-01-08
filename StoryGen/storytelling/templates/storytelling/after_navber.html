@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGE</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: black; 
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            transition: background 0.3s ease; /* Optional transition */
+        }
+        header .logo {
+            margin-left: 40px;
+            margin-top: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .side-bar {
+            background-color: white;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: -250px;
+            overflow-y: auto;
+            transition: 0.6s ease;
+            transition-property: right;
+            z-index: 20;
+        }
+        .side-bar.active {
+            right: 0;
+        }
+        .close-btn {
+            color: black;
+            position: absolute;
+            cursor: pointer;
+            font-size: 23px;
+            left: 0;
+            margin: 15px;
+        }
+        .menu {
+            width: 100%;
+            margin-top: 60px;
+            color: white;
+            padding-left: 0px;
+        }
+        .menu .item {
+            position: relative;
+            cursor: pointer;
+            padding-top: 5px;
+        }
+        .menu .item a {
+            color: black;
+            font-size: 20px;
+            text-decoration: none;
+            display: block;
+            padding: 5px 30px;
+            line-height: 50px;
+        }
+        .menu .item a:hover {
+            color: white;
+            background-color: black;
+        }
+        .menu-btn {
+            margin-right: 30px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+        }
+        .logout-btn {
+            color: black;
+            font-size: 20px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 5px 30px;
+            line-height: 50px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            color: white;
+            background-color: black;
+        }
+
+.logout-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+    </style>
+</head>
+<body>
+    <div class="side-bar">
+        <div class="cancel">
+            <div class="close-btn">
+                <i class="ri-close-line"></i>
+            </div>
+        </div>    
+        <div class="menu">
+            <div class="item"><a href=""><i class="" ></i>  HOME</a></div>
+            <div class="item"><a href="{% url 'home' %}"><i class="" ></i>  STORY GENERATOR</a></div>
+            <div class="item"><a href="{% url 'history' %}"><i class=""></i>  HISTORY</a></div>
+            <div class="item"><a href=""><i class=""></i>  ABOUT US</a></div>
+            <div class="item"><a href=""><i class=""></i>  CONTACT</a></div>
+            <div class="item">
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn"><i class=""></i> LOG OUT</button>
+                </form>
+            </div>            
+            
+        </div>
+    </div>
+    <header>
+        <div class="logo">
+            <a href="{% url 'landing_page' %}">
+                <img src="{% static 'imgs/logo.png' %}" alt="SAGE Logo" style="height: 50px;">
+            </a>
+        </div>
+        
+        <div class="menu-btn">
+            <i class="ri-menu-line"></i>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.menu-btn').click(function () {
+                $('.side-bar').addClass('active');
+            });
+
+            $('.close-btn').click(function () {
+                $('.side-bar').removeClass('active');
+            });
+
+            $(document).click(function (e) {
+                if (!$(e.target).closest('.side-bar, .menu-btn').length) {
+                    $('.side-bar').removeClass('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

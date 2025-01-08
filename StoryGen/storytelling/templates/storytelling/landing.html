@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
+    <link href="https://fonts.googleapis.com/css?family=Italiana&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Italiana', serif;
+            color: white;
+        }
+
+        .hero {
+            font-family: 'Italiana', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 5%;
+            background: url("{% static 'videos/background.mp4' %}") no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 4.7rem;
+            line-height: 1.2;
+            font-weight: 900;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+        h1, .hero h1 {
+            font-family: 'Italiana', serif;
+        }
+
+        .hero .cta {
+            margin-top: 20px;
+        }
+
+        .cta-button {
+            padding: 10px 20px;
+            font-size: 2rem;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            
+        }
+
+        .cta-button:hover {
+            background: purple;
+            color: white;
+        }
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; 
+        }
+
+        .content {
+            position: relative;
+            z-index: 1; 
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #aaa;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        p {
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+    
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+        {% include 'storytelling/after_navber.html' %}
+    {% else %}
+        {% include 'storytelling/before_navbar.html' %}
+    {% endif %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="{% static 'videos/background.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="content">
+            <h1>SAGE , </h1>
+            <h1>YOUR PERSONALIZED<br> STORYTELLER</h1>
+            <p style="font-size: 1.6rem;">Embark on a Journey of Imagination with Sage and<br> Weave Tales Where Stories Come to Life, One Choice at a Time.</p>
+            <div class="cta">
+                {% if user.is_authenticated %}
+                    <button class="cta-button" onclick="window.location.href='{% url 'home' %}'">Create a Story</button>
+                {% else %}
+                    <button class="cta-button" onclick="window.location.href='{% url 'login' %}'">Get Started</button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+
+    
+</body>
+
+</html>
